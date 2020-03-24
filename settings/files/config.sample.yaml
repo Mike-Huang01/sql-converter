@@ -1,0 +1,8 @@
+db:
+  host: "localhost"
+  port: 0000
+  user: "root"
+  name: "mysql database name"
+  password: "psswd"
+output:
+  filename: "my_db_dump"
