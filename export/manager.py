@@ -1,5 +1,5 @@
 from settings.settings import get_config
-from sql_export.formatters import CSVFormatter, JsonFormatter, ConsoleFormatter
+from export.formatters import CSVFormatter, JsonFormatter, ConsoleFormatter
 
 config = get_config()
 
@@ -20,7 +20,7 @@ class File:
         return self.filename
 
 
-class Manager:
+class ExportManager:
     formats = {"csv": "csv", "json": "json", "console": "console"}
 
     def __init__(self, data, headers, filename):

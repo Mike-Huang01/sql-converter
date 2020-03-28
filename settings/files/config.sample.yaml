@@ -4,5 +4,3 @@ db:
   user: "root"
   name: "mysql database name"
   password: "psswd"
-output:
-  filename: "my_db_dump"

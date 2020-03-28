@@ -4,25 +4,79 @@ Export SQL extract in dedicated format.
 
 ## Presentation
 
-This tool can be used by developers who want to dump SQL data in CSV or JSON to analyze tables or make tests fixtures.
-Joins are not possible in this first POC version. 
+This tool can be used by developers who want to print or dump SQL data in CSV or JSON to analyze tables or make tests 
+fixtures.
+
+## Installation
+
+First, setup the config file in `settings/files/config.yaml`
 
 ## Usage:
 
-First, setup the config file in `settings/environment/config.yaml`
+### Query Builder
 
 ```python
-from main import SQLExport
+from query.builder import Query
+from query.database import Table
 
-export = SQLExport(
-    tablename="set the table name here",
-    headers="set the headers separated by spaces in a string, None for '*'",
-    order="`field` for ASC, `-field` for DESC",
-    limit="Data limit, default = None",
-    output_filename="File extensions choices: csv, json. If no extension, console is the default",
-    pprint="True: Print output to console, False export to a file silently",
-    raw_query="Raw SQL query has to be used with appropriate headers"
+
+authors = Table(
+    name="author",
+    fields=["id", "name", "first_name", "nationality"],
+    alias="aut"
+)
+books = Table(
+    name="books",
+    fields=["id", "author_id", "title", "isbn"],
+    alias="boo",
 )
 
-data = export.run()
+query = Query(prettify=True) \
+    .add(authors) \
+    .add(books) \
+    .join(authors, "id", books, "author_id") \
+    .order_by(authors, "-id") \
+    .limit(5) \
+
+query.build()
+```
+## Export Data
+
+### With Query Builder
+
+```python
+from export.sql_export import SQLExport
+
+export = SQLExport(
+    query=query.build(),
+    headers=query.headers,
+    output_filename=f"authors.json",
+    pprint=True,
+)
+
+data = export.make()
+```
+
+### With Raw SQL
+
+```python
+from export.sql_export import SQLExport
+
+query = """SELECT aut.id, aut.name, aut.first_name, aut.nationality, boo.id, boo.author_id, boo.title, boo.isbn 
+FROM author AS aut 
+    INNER JOIN books AS boo 
+        ON boo.author_id = aut.id 
+ORDER BY aut.id DESC 
+LIMIT 5;"""
+
+headers = ["id", "name", "first_name", "nationality", "id", "author_id", "title", "isbn"]
+
+export = SQLExport(
+    query=query,
+    headers=headers,
+    output_filename=f"authors.json",
+    pprint=True,
+)
+
+data = export.make()
 ```

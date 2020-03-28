@@ -25,5 +25,5 @@ class Config:
         return f"<Configuration: {self.file}>"
 
 
-def get_config():
-    return Config()
+def get_config(file="config.yaml"):
+    return Config(file=file)

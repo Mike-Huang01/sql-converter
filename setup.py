@@ -31,7 +31,7 @@ setup(
     long_description=readme + '\n\n',
     platforms='any',
     name='sql-export',
-    packages=find_packages(include=['sql_export', 'settings']),
+    packages=find_packages(include=['export', 'settings']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,

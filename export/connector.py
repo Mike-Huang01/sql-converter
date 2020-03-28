@@ -18,8 +18,8 @@ class MySQLConnector:
 
     @classmethod
     def execute(cls, request):
+        connect = cls.connect()
         try:
-            connect = cls.connect()
             with connect.cursor() as cursor:
                 cursor.execute(request)
                 return cursor.fetchall()
