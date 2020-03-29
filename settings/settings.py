@@ -2,7 +2,6 @@ import os
 
 import yaml
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -12,7 +11,23 @@ class Config:
 
     @property
     def get(self):
+        if "SQL_EXPORT_DB_HOST" in os.environ.keys():
+            self.dump_environment_variables()
         return self.get_file_content()
+
+    def dump_environment_variables(self):
+        config = {
+            'db':
+            {
+                'host': os.environ["SQL_EXPORT_DB_HOST"],
+                'port': os.environ["SQL_EXPORT_DB_PORT"],
+                'user': os.environ["SQL_EXPORT_DB_USER"],
+                'name': os.environ["SQL_EXPORT_DB_NAME"],
+                'password': os.environ["SQL_EXPORT_DB_PASSWORD"],
+            }
+        }
+        with open(self.get_file_path(), 'w') as file:
+            yaml.dump(config, file)
 
     def get_file_content(self):
         with open(self.get_file_path()) as file:

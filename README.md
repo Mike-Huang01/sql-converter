@@ -9,7 +9,24 @@ fixtures.
 
 ## Installation
 
-First, setup the config file in `settings/files/config.yaml`
+### Configuration
+
+#### File
+
+Setup the config file in `settings/files/config.yaml`
+
+#### Environment Variables
+
+    'SQL_EXPORT_DB_HOST': 'test_localhost',
+    'SQL_EXPORT_DB_PORT': "1234",
+    'SQL_EXPORT_DB_USER': 'root',
+    'SQL_EXPORT_DB_NAME': 'mysql database name',
+    'SQL_EXPORT_DB_PASSWORD': 'psswd'
+    
+### Virtualenv
+
+    $ python3 -m venv venv
+    $ source venv/bin/activate
 
 ## Usage:
 
