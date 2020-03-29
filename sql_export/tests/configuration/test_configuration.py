@@ -26,8 +26,9 @@ def test_file_absolute_path(config):
 def test_should_get_content_from_file(config):
     content = config.get_file_content()
     with pytest.raises(KeyError):
-        env = os.environ["SQL_EXPORT_DB_HOST"]
-    expected = {'db':
+        os.environ["SQL_EXPORT_DB_HOST"]
+    expected = {
+        'db':
         {
             'host': 'localhost',
             'port': 0,
@@ -60,12 +61,12 @@ def test_get_item(config):
 
 def test_get_wrong_item(config):
     with pytest.raises(KeyError):
-        whatever = config.get["whatever"]
+        config.get["whatever"]
 
 
 def test_file_does_not_exist_shoult_raise_exception():
     with pytest.raises(FileNotFoundError):
-        config = get_config("whatever.yaml").get["whatever"]
+        get_config("whatever.yaml").get["whatever"]
 
 
 def test_should_print_repr_for_config(config):

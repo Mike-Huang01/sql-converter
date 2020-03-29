@@ -1,7 +1,9 @@
-from sql_export.exports.formatters import CSVFormatter, JsonFormatter, ConsoleFormatter
-from sql_export.exports.manager import ExportManager
-import pytest
 import os
+
+import pytest
+
+from sql_export.exports.formatters import ConsoleFormatter
+from sql_export.exports.manager import ExportManager
 
 
 @pytest.fixture

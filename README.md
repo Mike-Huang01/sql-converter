@@ -1,5 +1,8 @@
 # Readme
 
+[![pipeline status](https://gitlab.com/p2m3ng/sql-export/badges/master/pipeline.svg)](https://gitlab.com/p2m3ng/sql-export/-/commits/master)
+[![coverage report](https://gitlab.com/p2m3ng/sql-export/badges/master/coverage.svg)](https://gitlab.com/p2m3ng/sql-export/-/commits/master)
+
 Export SQL extract in dedicated format.
 
 ## Presentation
