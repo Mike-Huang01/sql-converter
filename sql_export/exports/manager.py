@@ -32,7 +32,7 @@ class ExportManager:
     def filename(self):
         return self._filename.get_filename()
 
-    def run(self, pprint):
+    def run(self, pprint: bool = False):
         extension = self._filename.get_extension()
         formatter = self.formats.get(extension, "console")
         if formatter == "csv":

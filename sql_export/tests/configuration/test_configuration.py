@@ -63,5 +63,10 @@ def test_get_wrong_item(config):
         whatever = config.get["whatever"]
 
 
+def test_file_does_not_exist_shoult_raise_exception():
+    with pytest.raises(FileNotFoundError):
+        config = get_config("whatever.yaml").get["whatever"]
+
+
 def test_should_print_repr_for_config(config):
     assert repr(config) == "<Configuration: config.sample.yaml>"

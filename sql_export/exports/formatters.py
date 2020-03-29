@@ -1,18 +1,21 @@
 import csv
 import json
+from abc import ABC, abstractmethod
 
 
-class BaseFormatter:
+class BaseFormatter(ABC):
     def __init__(self, headers, data, filename):
         self.headers = headers
         self.data = data
         self.filename = filename
 
+    @abstractmethod
     def export(self):
-        pass
+        """"""
 
+    @abstractmethod
     def print(self):
-        pass
+        """"""
 
 
 class CSVFormatter(BaseFormatter):
@@ -34,12 +37,20 @@ class CSVFormatter(BaseFormatter):
         return ""
 
 
-class DictFormatter(BaseFormatter):
+class DictFormatter(BaseFormatter, ABC):
     def _dict_formatter(self):
         result = []
         for data in self.data:
             result.append(dict(zip(self.headers, data)))
         return result
+
+    @abstractmethod
+    def export(self):
+        """"""
+
+    @abstractmethod
+    def print(self):
+        """"""
 
 
 class JsonFormatter(DictFormatter):
@@ -51,15 +62,16 @@ class JsonFormatter(DictFormatter):
         return self.use()
 
     def use(self):
-        return json.dumps(self._dict_formatter(), indent=2, ensure_ascii=False, default=str)
+        return json.dumps(self._dict_formatter(), ensure_ascii=False, default=str)
 
     def print(self):
-        data = self.use()
-        print(data)
-        return data
+        return print(json.dumps(self._dict_formatter(), indent=2, ensure_ascii=False, default=str))
 
 
 class ConsoleFormatter(DictFormatter):
+    def export(self):
+        raise ValueError("Unusable method.")
+
     def print(self):
         for data in self._dict_formatter():
             print(data)

@@ -17,8 +17,7 @@ class Config:
         try:
             return self.get_file_content()
         except FileNotFoundError:
-            print("Error :: Configuration file not set: check docs and fill `config.yaml` accordingly.")
-            sys.exit()
+            raise FileNotFoundError("Configuration file not set: check docs and fill `config.yaml` accordingly.")
 
     def dump_environment_variables(self):
         config = {
