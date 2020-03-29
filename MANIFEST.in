@@ -2,18 +2,14 @@ include LICENSE
 include README.md
 include .coveragerc
 include .gitignore
-include LICENSE
 include Makefile
 include requirements.txt
 include tox.ini
 
 recursive-include sql_export *
-recursive-include sql_query *
-recursive-include settings *
-recursive-include tests *
 global-exclude __pycache__/*, *.pyc
 global-exclude venv/*
 
-exclude settings/files/config.yaml
+exclude sql_export/settings/files/config.yaml
 
 recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif

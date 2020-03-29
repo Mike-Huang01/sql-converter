@@ -1,4 +1,5 @@
 import os
+import sys
 
 import yaml
 
@@ -13,14 +14,18 @@ class Config:
     def get(self):
         if "SQL_EXPORT_DB_HOST" in os.environ.keys():
             self.dump_environment_variables()
-        return self.get_file_content()
+        try:
+            return self.get_file_content()
+        except FileNotFoundError:
+            print("Error :: Configuration file not set: check docs and fill `config.yaml` accordingly.")
+            sys.exit()
 
     def dump_environment_variables(self):
         config = {
             'db':
             {
                 'host': os.environ["SQL_EXPORT_DB_HOST"],
-                'port': os.environ["SQL_EXPORT_DB_PORT"],
+                'port': int(os.environ["SQL_EXPORT_DB_PORT"]),
                 'user': os.environ["SQL_EXPORT_DB_USER"],
                 'name': os.environ["SQL_EXPORT_DB_NAME"],
                 'password': os.environ["SQL_EXPORT_DB_PASSWORD"],

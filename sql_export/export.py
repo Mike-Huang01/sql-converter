@@ -1,8 +1,8 @@
 from typing import List, Optional
 
-from sql_export.connector import MySQLConnector
-from sql_export.manager import ExportManager
-from sql_query.query import Query
+from sql_export.exports.connector import MySQLConnector
+from sql_export.exports.manager import ExportManager
+from sql_export.query import Query
 
 
 class SQLExport:

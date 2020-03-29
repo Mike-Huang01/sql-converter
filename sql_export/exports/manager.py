@@ -1,5 +1,5 @@
-from settings.settings import get_config
-from sql_export.formatters import CSVFormatter, JsonFormatter, ConsoleFormatter
+from sql_export.settings.settings import get_config
+from sql_export.exports.formatters import CSVFormatter, JsonFormatter, ConsoleFormatter
 
 config = get_config()
 

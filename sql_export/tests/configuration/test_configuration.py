@@ -1,6 +1,6 @@
 import os
 import pytest
-from settings.settings import get_config, BASE_DIR, Config
+from sql_export.settings.settings import get_config
 from unittest import mock
 
 
@@ -45,6 +45,12 @@ def test_should_get_content_from_environment_variables():
     assert config.get["db"]["host"] == "test_localhost"
     assert os.environ['SQL_EXPORT_DB_HOST']
     os.remove(config.get_file_path())
+
+
+@mock.patch.dict(os.environ, fake_env)
+def test_db_port_should_be_integer():
+    config = get_config("config-test.yaml")
+    assert isinstance(config.get["db"]["port"], int)
 
 
 def test_get_item(config):

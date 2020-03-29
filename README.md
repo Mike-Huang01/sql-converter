@@ -4,12 +4,21 @@ Export SQL extract in dedicated format.
 
 ## Presentation
 
-This tool can be used by developers who want to print or dump SQL data in CSV or JSON to analyze tables or make tests 
-fixtures.
+This tool can be used by developers in order to dump SQL data to console, CSV or JSON and make fixtures.  
 
 ## Installation
 
+Clone repository: 
+
+    $ git@gitlab.com:p2m3ng/sql-export.git
+
+Or install with pip:
+
+    $ pip install git+ssh://git@gitlab.com/p2m3ng/sql-export
+
 ### Configuration
+
+Use package configuration file or environment variables. 
 
 #### File
 
@@ -17,24 +26,19 @@ Setup the config file in `settings/files/config.yaml`
 
 #### Environment Variables
 
-    'SQL_EXPORT_DB_HOST': 'test_localhost',
-    'SQL_EXPORT_DB_PORT': "1234",
-    'SQL_EXPORT_DB_USER': 'root',
-    'SQL_EXPORT_DB_NAME': 'mysql database name',
-    'SQL_EXPORT_DB_PASSWORD': 'psswd'
-    
-### Virtualenv
-
-    $ python3 -m venv venv
-    $ source venv/bin/activate
+    SQL_EXPORT_DB_HOST="localhost"
+    SQL_EXPORT_DB_PORT=1234
+    SQL_EXPORT_DB_USER="root"
+    SQL_EXPORT_DB_NAME="my_database"
+    SQL_EXPORT_DB_PASSWORD="password"
 
 ## Usage:
 
 ### Query Builder
 
 ```python
-from sql_query.query import Query
-from sql_query.database import Table
+from sql_export.query import Query
+from sql_export.queries.database import Table
 
 
 authors = Table(
@@ -57,6 +61,7 @@ query = Query(prettify=True) \
 
 query.build()
 ```
+
 ## Export Data
 
 ### With Query Builder

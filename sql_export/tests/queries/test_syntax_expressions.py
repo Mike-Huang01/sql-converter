@@ -1,7 +1,7 @@
 import pytest
 
-from sql_query.database import Table
-from sql_query.syntax import Select, From, Join, Where, OrderBy, Limit
+from sql_export.queries.database import Table
+from sql_export.queries.syntax import Select, From, Join, Where, OrderBy, Limit
 
 
 class TestSelect:
