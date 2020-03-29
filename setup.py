@@ -13,7 +13,7 @@ setup(
     author='P2m3ng',
     author_email='contact@p2m3ng.com',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Programming Language :: Python :: 3.6.9',
@@ -31,11 +31,11 @@ setup(
     long_description=readme + '\n\n',
     platforms='any',
     name='sql-export',
-    packages=find_packages(include=['export', 'settings']),
+    packages=find_packages(include=['sql_export', 'sql_query', 'settings']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://gitlab.com/p2m3ng/sql-export',
-    version='0.0.1',
+    version='1.0.0',
     zip_safe=False,
 )

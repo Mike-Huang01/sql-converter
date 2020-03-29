@@ -33,8 +33,8 @@ Setup the config file in `settings/files/config.yaml`
 ### Query Builder
 
 ```python
-from query.builder import Query
-from query.database import Table
+from sql_query.query import Query
+from sql_query.database import Table
 
 
 authors = Table(
@@ -62,7 +62,7 @@ query.build()
 ### With Query Builder
 
 ```python
-from export.sql_export import SQLExport
+from sql_export.export import SQLExport
 
 export = SQLExport(
     query=query.build(),
@@ -77,7 +77,7 @@ data = export.make()
 ### With Raw SQL
 
 ```python
-from export.sql_export import SQLExport
+from sql_export.export import SQLExport
 
 query = """SELECT aut.id, aut.name, aut.first_name, aut.nationality, boo.id, boo.author_id, boo.title, boo.isbn 
 FROM author AS aut 

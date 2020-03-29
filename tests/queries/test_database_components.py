@@ -2,7 +2,7 @@ from unittest import mock
 
 import pytest
 
-from query.database import BaseMapper, Database, Table, Field
+from sql_query.database import BaseMapper, Database, Table, Field
 
 
 def test_generate_alias():

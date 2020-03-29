@@ -1,11 +1,8 @@
-import sys
-
-from export.connector import MySQLConnector
-from export.manager import ExportManager
-
-from query.builder import Query
-
 from typing import List, Optional
+
+from sql_export.connector import MySQLConnector
+from sql_export.manager import ExportManager
+from sql_query.query import Query
 
 
 class SQLExport:

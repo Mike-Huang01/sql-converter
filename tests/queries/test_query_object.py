@@ -1,5 +1,5 @@
-from query.database import Table
-from query.builder import Query
+from sql_query.database import Table
+from sql_query.query import Query
 
 
 def test_headers_should_be_a_list():
