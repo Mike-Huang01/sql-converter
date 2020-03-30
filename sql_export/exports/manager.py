@@ -1,5 +1,7 @@
 from sql_export.settings.settings import get_config
-from sql_export.exports.formatters import CSVFormatter, JsonFormatter, ConsoleFormatter
+from sql_export.exports.formatters import CSVFormatter, DictFormatter, JsonFormatter, ConsoleFormatter
+
+from typing import Optional
 
 config = get_config()
 
@@ -23,8 +25,8 @@ class File:
 class ExportManager:
     formats = {"csv": "csv", "json": "json", "console": "console"}
 
-    def __init__(self, data, headers, filename):
-        self._filename = File(filename=filename)
+    def __init__(self, data: tuple, headers: list, export_to: Optional[str] = None):
+        self._filename = File(filename=export_to)
         self.headers = headers
         self.data = data
 
@@ -32,29 +34,34 @@ class ExportManager:
     def filename(self):
         return self._filename.get_filename()
 
-    def run(self, pprint: bool = False):
+    @property
+    def formatter(self):
         extension = self._filename.get_extension()
-        formatter = self.formats.get(extension, "console")
-        if formatter == "csv":
+        return self.formats.get(extension, "console")
+
+    def run(self, pprint: bool = False, json: bool = False):
+        if self.formatter == "csv":
             return self.__to_csv(pprint=pprint)
-        elif formatter == "json":
-            return self.__to_json(pprint=pprint)
-        elif formatter == "console":
-            return self.__to_console()
+        elif self.formatter == "console" and json or self.formatter == "json":
+            return self.__to_json(pprint=pprint, json=json)
+        elif self.formatter == "console":
+            return self.__to_console(pprint=pprint)
 
-    def __to_console(self):
-        formatter = ConsoleFormatter(headers=self.headers, data=self.data, filename=self.filename)
-        formatter.print()
+    def __to_console(self, pprint: bool = False):
+        if pprint:
+            return ConsoleFormatter(headers=self.headers, data=self.data, export_to=self.filename).print()
+        return DictFormatter(headers=self.headers, data=self.data, export_to=self.filename).to_dict()
 
-    def __to_csv(self, pprint=False):
-        formatter = CSVFormatter(headers=self.headers, data=self.data, filename=self.filename)
+    def __to_csv(self, pprint: bool = False):
+        formatter = CSVFormatter(headers=self.headers, data=self.data, export_to=self.filename)
         if pprint:
             return formatter.print()
         return formatter.export()
 
-    def __to_json(self, pprint=False):
-        formatter = JsonFormatter(headers=self.headers, data=self.data, filename=self.filename)
+    def __to_json(self, pprint: bool = False, json: bool = False):
+        formatter = JsonFormatter(headers=self.headers, data=self.data, export_to=self.filename)
         if pprint:
-            return formatter.print()
-        formatter.export()
+            formatter.print()
+        if self._filename and not json:
+            return formatter.export()
         return formatter.use()

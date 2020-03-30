@@ -10,13 +10,11 @@ class SQLExport:
             self,
             query: (Query, str),
             headers: List[str],
-            output_filename: Optional[str] = None,
-            pprint: Optional[bool] = True,
+            export_to: Optional[str] = None,
     ):
         self.query = query
         self._headers = headers
-        self.output_filename = output_filename
-        self.pprint = pprint
+        self.export_to = export_to
 
     @property
     def headers(self):
@@ -27,7 +25,7 @@ class SQLExport:
     def make_query(self):
         return MySQLConnector.execute(self.query)
 
-    def make(self):
+    def make(self, pprint: Optional[bool] = False, json: Optional[bool] = False):
         return ExportManager(
-            data=self.make_query(), headers=self.headers, filename=self.output_filename
-        ).run(self.pprint)
+            data=self.make_query(), headers=self.headers, export_to=self.export_to
+        ).run(pprint=pprint, json=json)

@@ -17,7 +17,7 @@ def data():
 
 
 def test_json_formatter_should_return_json_seialized_data_in_file(headers, data, capsys):
-    ExportManager(headers=headers, data=data, filename="test_json.json").run()
+    ExportManager(headers=headers, data=data, export_to="test_json.json").run()
     captured = capsys.readouterr()
     assert captured.out == "test_json.json has been created successfully.\n"
     assert os.path.exists("test_json.json") is True
@@ -25,7 +25,7 @@ def test_json_formatter_should_return_json_seialized_data_in_file(headers, data,
 
 
 def test_should_print_json_output(headers, data, capsys):
-    ExportManager(headers=headers, data=data, filename="test_json.json").run(pprint=True)
+    ExportManager(headers=headers, data=data).run(pprint=True, json=True)
     captured = capsys.readouterr()
     expected = '[\n  {\n    "id": 1,\n    "users": "John Doe"\n  }' \
                ',\n  {\n    "id": 2,\n    "users": "John Smith"\n  }\n]\n'
@@ -33,7 +33,7 @@ def test_should_print_json_output(headers, data, capsys):
 
 
 def test_csv_formatter_should_return_csv_file(headers, data, capsys):
-    ExportManager(headers=headers, data=data, filename="test_csv.csv").run()
+    ExportManager(headers=headers, data=data, export_to="test_csv.csv").run()
     captured = capsys.readouterr()
     assert captured.out == "test_csv.csv has been created successfully.\n"
     assert os.path.exists("test_csv.csv") is True
@@ -41,7 +41,7 @@ def test_csv_formatter_should_return_csv_file(headers, data, capsys):
 
 
 def test_csv_formatter_should_print_result_on_console(headers, data, capsys):
-    ExportManager(headers=headers, data=data, filename="test_csv.csv").run(pprint=True)
+    ExportManager(headers=headers, data=data, export_to="test_csv.csv").run(pprint=True)
     captured = capsys.readouterr()
     expected = "test_csv.csv has been created successfully.\n" \
                "['id', 'users']\n['1', 'John Doe']\n['2', 'John Smith']\n"
@@ -51,12 +51,17 @@ def test_csv_formatter_should_print_result_on_console(headers, data, capsys):
 
 
 def test_should_print_formatted_data_on_console(headers, data, capsys):
-    ConsoleFormatter(headers=["id", "user"], data=data, filename=None).print()
+    ExportManager(headers=["id", "user"], data=data, export_to=None).run(pprint=True)
     captured = capsys.readouterr()
     assert captured.out == "{'id': 1, 'user': 'John Doe'}\n{'id': 2, 'user': 'John Smith'}\n"
+
+
+def test_should_return_dict_formatted_data(headers, data, capsys):
+    data = ExportManager(headers=["id", "user"], data=data, export_to=None).run(pprint=False)
+    assert data == [{'id': 1, 'user': 'John Doe'}, {'id': 2, 'user': 'John Smith'}]
 
 
 def test_export_console_output_should_return_error():
     data = ((1, "John Doe"), (2, "John Smith"),)
     with pytest.raises(ValueError):
-        ConsoleFormatter(headers=["id", "user"], data=data, filename=None).export()
+        ConsoleFormatter(headers=["id", "user"], data=data, export_to=None).export()

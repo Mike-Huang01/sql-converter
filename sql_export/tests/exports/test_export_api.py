@@ -15,15 +15,12 @@ def data():
 
 
 @mock.patch.object(SQLExport, "make_query")
-def test_sql_export_should_print_data(mock_sql_response, query, capsys):
-    data = ((51, 'John Doe', "john.doe@example.com"), )
+def test_sql_export_should_print_data(mock_sql_response, query, data, capsys):
     mock_sql_response.return_value = data
     SQLExport(
         query=query,
         headers=["id", "username", "email"],
-        output_filename=None,
-        pprint=True,
-    ).make()
+    ).make(pprint=True)
     expected = "{'id': 51, 'username': 'John Doe', 'email': 'john.doe@example.com'}\n"
     captured = capsys.readouterr()
     assert captured.out == expected
