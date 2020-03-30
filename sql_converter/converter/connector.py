@@ -1,6 +1,6 @@
 import pymysql
 
-from sql_export.settings.settings import get_config
+from sql_converter.settings.settings import get_config
 
 
 class MySQLConnector:

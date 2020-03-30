@@ -1,4 +1,4 @@
-from sql_export.queries.database import Table
+from sql_converter.query_builder.database import Table
 from typing import Optional
 from abc import ABC, abstractmethod
 

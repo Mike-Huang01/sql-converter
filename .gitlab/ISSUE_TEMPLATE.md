@@ -1,6 +1,6 @@
 # Issue Template
 
-* SQLEX version:
+* SQLCO version:
 * Python version:
 * Operating System:
 

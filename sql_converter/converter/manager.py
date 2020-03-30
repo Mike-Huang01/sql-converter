@@ -1,7 +1,7 @@
-from sql_export.settings.settings import get_config
-from sql_export.exports.formatters import CSVFormatter, DictFormatter, JsonFormatter, ConsoleFormatter
-
 from typing import Optional
+
+from sql_converter.converter.formatters import CSVFormatter, DictFormatter, JsonFormatter, ConsoleFormatter
+from sql_converter.settings.settings import get_config
 
 config = get_config()
 
@@ -22,7 +22,7 @@ class File:
         return self.filename
 
 
-class ExportManager:
+class OutputManager:
     formats = {"csv": "csv", "json": "json", "console": "console"}
 
     def __init__(self, data: tuple, headers: list, export_to: Optional[str] = None):

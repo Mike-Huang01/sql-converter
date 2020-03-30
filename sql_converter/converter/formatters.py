@@ -1,6 +1,6 @@
 import csv
 import json
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class BaseFormatter(ABC):

@@ -1,11 +1,11 @@
 from typing import List, Optional
 
-from sql_export.exports.connector import MySQLConnector
-from sql_export.exports.manager import ExportManager
-from sql_export.query import Query
+from sql_converter.converter.connector import MySQLConnector
+from sql_converter.converter.manager import OutputManager
+from sql_converter.query import Query
 
 
-class SQLExport:
+class SQLConvert:
     def __init__(
             self,
             query: (Query, str),
@@ -26,6 +26,6 @@ class SQLExport:
         return MySQLConnector.execute(self.query)
 
     def make(self, pprint: Optional[bool] = False, json: Optional[bool] = False):
-        return ExportManager(
+        return OutputManager(
             data=self.make_query(), headers=self.headers, export_to=self.export_to
         ).run(pprint=pprint, json=json)
